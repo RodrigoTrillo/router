@@ -1,10 +1,10 @@
 const {Router} = require('express')
-const prodManag = require ('../productManager.js')
+const fs =require('fs')
+const prodManag= require ('../productManager.js')
 const router = Router();
-const { v4: uuidv4 } = require('uuid');
 
-const products = []
-uuidv4();
+
+const products = new prodManag()
 
 const convertToNumber =(req, res ,next)=>{
     req.params.id = Number(req.params.id)
@@ -12,16 +12,15 @@ const convertToNumber =(req, res ,next)=>{
 }
 
 router.get ('/',(req, res)=>{
-    res.json({message: products})
+    res.json({products})
 })
 
 router.get ('/:id',convertToNumber,(req, res)=>{
-    const id = req.params.uuidv4();
-    res.json({message: id + 5})
+    const id = req.params;
+    res.json({message: id })
 })
 
-router.post ('/',(req, res)=>{
-    const id = uuidv4();
+router.post ('/',async(req, res)=>{
     const infoProduct = req.body
     products.push(infoProduct)
     

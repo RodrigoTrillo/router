@@ -1,7 +1,8 @@
 const {Router} = require('express')
-
+const newCart = Router()
 const router = Router()
-
+const cartManag = require('../cart.js')
+const carrito = new cartManag()
 const carts = []
 
 
@@ -10,17 +11,8 @@ const convertToNumber =(req, res ,next)=>{
     next()
 }
 
-router.get('/',async(req, res)=>{
-    const {limit} = req.query
-    let absLimit= Math.abs(limit) 
-    let allProd = await products.getProducts()
-    let limitedProds = allProd.slice(0, absLimit)
-    if (absLimit) {
-      if (absLimit>allProd.length) {
-        return res.send(`<h1>El límite establecido es mayor a la cantidad de productos existentes</h1>`)
-      }
-      return res.send(limitedProds)
-    }
+router.get('/',(req, res)=>{
+  
     res.json({message: carts})
 })
 
@@ -30,10 +22,8 @@ router.get('/:pid',convertToNumber,(req, res)=>{
 })
 
 router.post ('/',(req, res)=>{
-    const infoCart = req.body
-    carts.push(infoCart)
-
-    res.json({message: 'carts Created'})
+    carrito.newCart()
+  res.json({msg: 'carrito añadido'})
 })
 
 module.exports= router
