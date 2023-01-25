@@ -1,7 +1,5 @@
 const {Router} = require('express')
 const fs =require('fs');
-const { findAll } = require('../productManager');
-const ProductManager = require('../productManager')
 const router = Router();
 const { v4: uuidv4 } = require('uuid');
 const id = uuidv4();
@@ -107,7 +105,7 @@ router.delete('/:id',async(req, res)=>{
   if(product == undefined){
     return res.send(`El producto con id ${id} no  se elimino`)
   }
-  return res.json('El producto se elimino correctamente')
+  return res.json(`El producto con el id: ${id} se elimino correctamente`)
   
 
 
